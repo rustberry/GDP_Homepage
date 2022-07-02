@@ -1,13 +1,20 @@
 // function to find feet of triangle's altitudes
 export function getPedalPoint(from, toA, toB) {
-  const targetLinEq = solveLinearEquation(toA, toB);
-  const heightLinEq = solvePerpendicularLineEquation(targetLinEq.m, from);
-  return calculateLineIntersectInLinearEquation(
-    targetLinEq.m,
-    targetLinEq.b,
-    heightLinEq.m,
-    heightLinEq.b
-  );
+  if (toA === toB) {
+  }
+  else {
+    const toAPoint = new fabric.Point(toA.x, toA.y);
+    const toBPoint = new fabric.Point(toB.x, toB.y);
+    const fromPoint = new fabric.Point(from.x, from.y);
+    const directionVector = toAPoint.subtract(toBPoint);
+    const s = toAPoint.subtract(fromPoint);
+    const lambda = (s.x * directionVector.x + s.y * directionVector.y) / (directionVector.x ** 2 + directionVector.y ** 2);
+    let result = toAPoint.add(directionVector.multiply(lambda));
+    return {
+       x: result.x, 
+       y: result.y, 
+      };
+  }
 }
 
 export function calculateCircumcenter(A, B, C) {
